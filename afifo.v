@@ -26,6 +26,7 @@ module async_fifo #(
     wire [ADDR_WIDTH-1:0] wr_addr = wr_ptr_bin[ADDR_WIDTH-1:0];
     wire [ADDR_WIDTH-1:0] rd_addr = rd_ptr_bin[ADDR_WIDTH-1:0];
 
+    
     // Synchronize pointers across clock domains
     always @(posedge clk_wr or posedge rst) begin
         if (rst) begin
@@ -47,6 +48,7 @@ module async_fifo #(
         end
     end
 
+    
     // Write operation
     always @(posedge clk_wr or posedge rst) begin
         if (rst) begin
@@ -70,6 +72,7 @@ module async_fifo #(
         end
     end
 
+    
     // Generate full and empty flags
     assign full = (wr_ptr_gray == {~rd_ptr_gray_sync2[ADDR_WIDTH:ADDR_WIDTH-1], rd_ptr_gray_sync2[ADDR_WIDTH-2:0]});
     assign empty = (wr_ptr_gray_sync2 == rd_ptr_gray);

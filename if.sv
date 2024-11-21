@@ -52,22 +52,22 @@ interface afifo_if (
     // Modports for different usage contexts
     modport RDRV_MP (
         input rd_clk, reset, 
-        clocking dr_cb
+        clocking rdrv_cb
     );
 
     modport WDRV_MP (
         input wr_clk, reset, 
-        clocking dw_cb
+        clocking wdrv_cb
     );
 
     modport RMON_MP (
         input rd_clk, reset, 
-        clocking mr_cb
+        clocking rmon_cb
     );
 
     modport WMON_MP (
         input wr_clk, reset, 
-        clocking mw_cb
+        clocking wmon_cb
     );
 
 endinterface : afifo_if

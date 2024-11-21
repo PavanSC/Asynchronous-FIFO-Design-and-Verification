@@ -2,7 +2,7 @@ class agt extends uvm_agent;
   seqr seqrh;
   drv drvh;
   mon monh;
-  config cfg;
+  
   `uvm_component_utils(agt)
   
   function new(string name = "agt", uvm_component parent);

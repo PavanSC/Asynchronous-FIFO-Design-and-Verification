@@ -27,14 +27,14 @@ module top;
     .wr_clk(tif.wr_clk),
     .rd_clk(tif.rd_clk),
     .reset(tif.reset),
-    .wr_data(tif.wr_data),
+    .data_in(tif.data_in),
     .wr_en(tif.wr_en),
     .rd_en(tif.rd_en),
     .fifo_full(tif.fifo_full),
     .fifo_empty(tif.fifo_empty),
     .fifo_almost_full(tif.fifo_almost_full),
     .fifo_almost_empty(tif.fifo_almost_empty),
-    .rd_data(tif.rd_data)
+    .data_out(tif.data_out)
   );
   
   // Assertions
@@ -89,7 +89,7 @@ module top;
     $dumpvars(0, top);
     
     // Run Test
-    run_test("f_test");
+    run_test("base_test"); // can use run_test(); and give the test name in makefile
     // Alternative test can be run by uncommenting
     // run_test("f_test_1");
   end

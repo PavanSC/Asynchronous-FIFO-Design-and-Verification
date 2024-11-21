@@ -1,4 +1,4 @@
-interface f_interface (
+interface afifo_if (
     input logic wr_clk, 
     input logic rd_clk, 
     input logic reset
@@ -14,7 +14,7 @@ interface f_interface (
     logic [31:0] data_out;
 
     // Driver Read Clocking Block (with 1ns skew)
-    clocking dr_cb @(posedge rd_clk);
+    clocking rdrv_cb @(posedge rd_clk);
         default input #1 output #1;
         output wr_en, rd_en, data_in;
         input fifo_full, fifo_empty, 
@@ -23,7 +23,7 @@ interface f_interface (
     endclocking
 
     // Driver Write Clocking Block (with 1ns skew)
-    clocking dw_cb @(posedge wr_clk);
+    clocking wdrv_cb @(posedge wr_clk);
         default input #1 output #1;
         output wr_en, rd_en, data_in;
         input fifo_full, fifo_empty, 
@@ -32,7 +32,7 @@ interface f_interface (
     endclocking
 
     // Monitor Read Clocking Block (with 2ns skew)
-    clocking mr_cb @(posedge rd_clk);
+    clocking rmon_cb @(posedge rd_clk);
         default input #2 output #2;
         input wr_en, rd_en, data_in, 
               fifo_full, fifo_empty, 
@@ -41,7 +41,7 @@ interface f_interface (
     endclocking
 
     // Monitor Write Clocking Block (with 2ns skew)
-    clocking mw_cb @(posedge wr_clk);
+    clocking wmon_cb @(posedge wr_clk);
         default input #2 output #2;
         input wr_en, rd_en, data_in, 
               fifo_full, fifo_empty, 
@@ -50,24 +50,24 @@ interface f_interface (
     endclocking
 
     // Modports for different usage contexts
-    modport driver_read (
+    modport RDRV_MP (
         input rd_clk, reset, 
         clocking dr_cb
     );
 
-    modport driver_write (
+    modport WDRV_MP (
         input wr_clk, reset, 
         clocking dw_cb
     );
 
-    modport monitor_read (
+    modport RMON_MP (
         input rd_clk, reset, 
         clocking mr_cb
     );
 
-    modport monitor_write (
+    modport WMON_MP (
         input wr_clk, reset, 
         clocking mw_cb
     );
 
-endinterface : f_interface
+endinterface : afifo_if

@@ -1,4 +1,4 @@
-#Makefile for UVM Testbench - FIFO
+#Makefile for UVM Testbench - ASYNCHRONOUS FIFO
 
 # SIMULATOR = Questa for Mentor's Questasim
 # SIMULATOR = VCS for Synopsys's VCS
@@ -12,7 +12,7 @@ RTL= ../rtl/*
 work= work #library name
 SVTB1= ../tb/top.sv
 INC = +incdir+../tb 
-SVTB2 = ../tb/fifo_pkg.sv
+SVTB2 = ../tb/afifo_pkg.sv
 VSIMOPT= -vopt -voptargs=+acc 
 VSIMCOV= -coverage -sva 
 VSIMBATCH1= -c -do  " log -r /* ;coverage save -onexit mem_cov1;run -all; exit"
@@ -46,7 +46,7 @@ sv_cmp_Questa:
 	vlog -work $(work) $(RTL) $(INC) $(SVTB2) $(SVTB1) 	
 	
 run_test_Questa: sv_cmp
-	vsim -cvgperinstance $(VSIMOPT) $(VSIMCOV) $(VSIMBATCH1)  -wlf wave_file1.wlf -l test1.log  -sv_seed random  work.top +UVM_TESTNAME=test
+	vsim -cvgperinstance $(VSIMOPT) $(VSIMCOV) $(VSIMBATCH1)  -wlf wave_file1.wlf -l test1.log  -sv_seed random  work.top +UVM_TESTNAME=base_test
 	vcover report  -cvg  -details -nocompactcrossbins -codeAll -assert -directive -html mem_cov1
 	
 
